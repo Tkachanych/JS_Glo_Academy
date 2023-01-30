@@ -9,29 +9,29 @@ let rollback = 15;
 let adaptive = confirm('Нужен ли адаптив на сайте?');
 
 let service1 = prompt('Какой дополнительный тип услуги нужен?');
-let servicePrice1 = parseFloat(prompt('Сколько это будет стоить?')) || 0;
+let servicePrice1 = service1 
+                  ? parseFloat(prompt('Сколько это будет стоить?')) || 0 
+                  : 0;
 
 let service2 = prompt('Какой дополнительный тип услуги нужен?');
-let servicePrice2 = parseFloat(prompt('Сколько это будет стоить?')) || 0;
+let servicePrice2 = service1 
+                  ? parseFloat(prompt('Сколько это будет стоить?')) || 0 
+                  : 0;
 
 let fullPrice = screenPrice + servicePrice1 + servicePrice2;
-let servicePercentPrice = Math.ceil(fullPrice - rollback);
-console.log(servicePercentPrice);
+let servicePercentPrice = Math.ceil(fullPrice - (fullPrice * (rollback / 100)));
+console.log('servicePercentPrice = ' + servicePercentPrice);
 
 //Расчёт скидки.
-let discount = 'Скидка не предусмотрена';
-
-switch(true) {
-  case fullPrice > 30000:
-    discount = 'Даем скидку в 10%';
-    break;
-  case fullPrice > 15000:
-    discount = 'Даем скидку в 5%';
-    break;
-  case fullPrice >= 0:
-    break;
-  default: discount = 'Что-то пошло не так.'
-}
+const discount = (() => {
+  if (fullPrice > 30000)
+    return 'Даем скидку в 10%';
+  if (fullPrice > 15000)
+    return 'Даем скидку в 5%';
+  if (fullPrice >= 0)
+    return 'Скидка не предусмотрена';
+  return 'Что-то пошло не так.';
+})();
 console.log(discount);
 
 //Весь функционал, что был ранее оставляем
