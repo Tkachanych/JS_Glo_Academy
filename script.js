@@ -8,12 +8,10 @@ let rollback = 15;
 let adaptive = confirm('Нужен ли адаптив на сайте?');
 
 let service1 = prompt('Какой дополнительный тип услуги нужен?');
-let servicePrice1 = service1?parseFloat(prompt('Сколько это будет стоить?')) || 0:0;
-console.log(service1, servicePrice1);
+let servicePrice1 = parseFloat(prompt('Сколько это будет стоить?')) || 0;
 
 let service2 = prompt('Какой дополнительный тип услуги нужен?');
-let servicePrice2 = service2?parseFloat(prompt('Сколько это будет стоить?')) || 0:0;
-console.log(service2, servicePrice2);
+let servicePrice2 = parseFloat(prompt('Сколько это будет стоить?')) || 0;
 
 let fullPrice = screenPrice + servicePrice1 + servicePrice2;
 let servicePercentPrice = Math.ceil(fullPrice - rollback);
