@@ -4,6 +4,7 @@ let title = prompt('Как называется Ваш проект?');
 
 let screens = prompt('Какие типы экранов нужно разработать?','Простые, Сложные, Интерактивные');
 let screenPrice = parseFloat(prompt('Сколько будет стоить данная работа?', 2500)) || 0;
+
 let rollback = 15;
 let adaptive = confirm('Нужен ли адаптив на сайте?');
 
@@ -15,9 +16,11 @@ let servicePrice2 = parseFloat(prompt('Сколько это будет стои
 
 let fullPrice = screenPrice + servicePrice1 + servicePrice2;
 let servicePercentPrice = Math.ceil(fullPrice - rollback);
+console.log(servicePercentPrice);
 
-let discount = 'Скидка не предусмотрена';
 //Расчёт скидки.
+let discount = 'Скидка не предусмотрена';
+
 switch(true) {
   case fullPrice > 30000:
     discount = 'Даем скидку в 10%';
@@ -29,7 +32,6 @@ switch(true) {
     break;
   default: discount = 'Что-то пошло не так.'
 }
-
 console.log(discount);
 
 //Весь функционал, что был ранее оставляем
