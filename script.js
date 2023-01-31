@@ -1,40 +1,33 @@
 'use strict';
 
-let title = prompt('Как называется Ваш проект?');
+const title = prompt('Как называется Ваш проект?');
+const screens = prompt('Какие типы экранов нужно разработать?','Простые, Сложные, Интерактивные');
+const screenPrice = parseFloat(prompt('Сколько будет стоить данная работа?'));
+const adaptive = confirm('Нужен ли адаптив на сайте?');
+const service1 = prompt('Какой дополнительный тип услуги нужен?');
+const servicePrice1 = parseFloat(prompt('Сколько это будет стоить?'));
+const service2 = prompt('Какой дополнительный тип услуги нужен?');
+const servicePrice2 = parseFloat(prompt('Сколько это будет стоить?'));
 
-let screens = prompt('Какие типы экранов нужно разработать?','Простые, Сложные, Интерактивные');
-let screenPrice = parseFloat(prompt('Сколько будет стоить данная работа?', 2500)) || 0;
+const rollback = 15;
 
-let rollback = 15;
-let adaptive = confirm('Нужен ли адаптив на сайте?');
-
-let service1 = prompt('Какой дополнительный тип услуги нужен?');
-let servicePrice1 = service1 
-                  ? parseFloat(prompt('Сколько это будет стоить?')) || 0 
-                  : 0;
-
-let service2 = prompt('Какой дополнительный тип услуги нужен?');
-let servicePrice2 = service1 
-                  ? parseFloat(prompt('Сколько это будет стоить?')) || 0 
-                  : 0;
-
-let fullPrice = screenPrice + servicePrice1 + servicePrice2;
-let servicePercentPrice = Math.ceil(fullPrice - (fullPrice * (rollback / 100)));
-console.log('servicePercentPrice = ' + servicePercentPrice);
+const fullPrice = screenPrice + servicePrice1 + servicePrice2;
+const servicePercentPrice = Math.ceil(fullPrice - (fullPrice * (rollback / 100)));
 
 //Расчёт скидки.
-const discount = (() => {
-  if (fullPrice > 30000)
+const discount = function(price) {
+  if (price > 30000)
     return 'Даем скидку в 10%';
-  if (fullPrice > 15000)
+  if (price > 15000)
     return 'Даем скидку в 5%';
-  if (fullPrice >= 0)
+  if (price >= 0)
     return 'Скидка не предусмотрена';
-  return 'Что-то пошло не так.';
-})();
-console.log(discount);
+    return 'Что-то пошло не так.';
+};
 
 //Весь функционал, что был ранее оставляем
+console.log('servicePercentPrice = ' + servicePercentPrice);
+console.log(discount(fullPrice));
 console.log(typeof title);
 console.log(typeof fullPrice);
 console.log(typeof adaptive);
