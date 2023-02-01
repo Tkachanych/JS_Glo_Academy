@@ -1,22 +1,52 @@
 'use strict';
 
-let title = prompt('Как называется Ваш проект?');
-let screens = prompt('Какие типы экранов нужно разработать?','Простые, Сложные, Интерактивные');
-let screenPrice = parseFloat(prompt('Сколько будет стоить данная работа?'));
-let adaptive = confirm('Нужен ли адаптив на сайте?');
-let service1 = prompt('Какой дополнительный тип услуги нужен?');
-let servicePrice1 = parseFloat(prompt('Сколько это будет стоить?'));
-let service2 = prompt('Какой дополнительный тип услуги нужен?');
-let servicePrice2 = parseFloat(prompt('Сколько это будет стоить?'));
+let title
+let screens
+let screenPrice
+let adaptive
 let rollback = 15;
+let service1;
+let service2;
+let allServicePrices;
+let fullPrice;
+let servicePercentPrice;
 
-const showTypeOf = function(variable) {
-  console.log(variable, typeof variable);
+const isNumber = function (num) {
+  return isNaN(num);
+}
+
+const asking = function () {
+  title = prompt('Как называется Ваш проект?', 'Калькулятор вёрстки');
+  screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Сложные, Интерактивные');
+
+  do {
+    screenPrice = parseFloat(prompt('Сколько будет стоить данная работа?'));
+  } while (isNumber(screenPrice));
+
+  adaptive = confirm('Нужен ли адаптив на сайте?');
 }
 
 //Функция возвращает сумму всех дополнительных услуг.
-const getAllServicePrices = function(price1, price2) {
-  return price1 + price2;
+const getAllServicePrices = function () {
+  let sum = 0;
+  let servicePrice = 0;
+
+  for (let i = 0; i < 2; i++) {
+    if (i === 0) {
+      service1 = prompt('Какой дополнительный тип услуги нужен?');
+    } else if (i === 1) {
+      service2 = prompt('Какой дополнительный тип услуги нужен?');
+    }
+    do {
+      servicePrice = parseFloat(prompt('Сколько это будет стоить?', 0));
+    } while (isNumber(servicePrice));
+    sum += servicePrice;
+  }
+  return sum;
+}
+
+const showTypeOf = function (variable) {
+  console.log(variable, typeof variable);
 }
 
 //Функция возвращает сумму стоимости верстки и стоимости дополнительных услуг
@@ -25,7 +55,7 @@ function getFullPrice(price1, price2) {
 }
 
 //Расчёт скидки.
-const getRollbackMessage = function(price) {
+const getRollbackMessage = function (price) {
   if (price > 30000) return 'Даем скидку в 10%';
   if (price > 15000) return 'Даем скидку в 5%';
   if (price >= 0) return 'Скидка не предусмотрена';
@@ -33,19 +63,21 @@ const getRollbackMessage = function(price) {
 }
 
 //Функция возвращает строку: первый символ с большой буквы, остальные с маленькой.
-const getTitle = function(string) {
+const getTitle = function (string) {
   let str = string.trim().toLowerCase();
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 //Функция возвращает итоговую стоимость за вычетом процента отката
-const getServicePercentPrices = function(price, rollback) {
+const getServicePercentPrices = function (price, rollback) {
   return Math.ceil(price - (price * (rollback / 100)));
 }
 
-const allServicePrices = getAllServicePrices(servicePrice1, servicePrice2);
-const fullPrice = getFullPrice(screenPrice, allServicePrices);
-const servicePercentPrice = getServicePercentPrices(fullPrice, rollback);
+asking();
+
+allServicePrices = getAllServicePrices();
+fullPrice = getFullPrice(screenPrice, allServicePrices);
+servicePercentPrice = getServicePercentPrices(fullPrice, rollback);
 
 showTypeOf(title);
 showTypeOf(fullPrice);
