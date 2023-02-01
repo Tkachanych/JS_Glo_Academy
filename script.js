@@ -11,6 +11,7 @@ let allServicePrices;
 let fullPrice;
 let servicePercentPrice;
 
+//Изменено для усложнённого задания.
 const isNumber = function (num) {
   return isNaN(num);
 }
