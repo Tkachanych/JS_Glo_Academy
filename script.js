@@ -4,7 +4,7 @@ const game = function () {
 
   let userAnswer;
 
-  const numToGuess = Math.round(Math.random() * 100);
+  const numToGuess = Math.floor(Math.random() * 100) + 1;
   console.log(numToGuess);
 
   const isNumber = function (num) {
@@ -14,7 +14,7 @@ const game = function () {
   const getAnswer = function (str) {
     if (str === null) {
       return null;
-    } else if (isNumber(+str)) {
+    } else if (isNumber(+str) && str !== '') {
       return parseInt(str);
     } else {
       return getAnswer(prompt('Введи число!'));
