@@ -13,7 +13,8 @@ let servicePercentPrice;
 
 //Изменено для усложнённого задания.
 const isNumber = function (num) {
-  return isNaN(num);
+  return !isNaN(parseFloat(num)) 
+    && parseFloat(num).toString().length === num.length;
 }
 
 const asking = function () {
@@ -21,8 +22,8 @@ const asking = function () {
   screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Сложные, Интерактивные');
 
   do {
-    screenPrice = parseFloat(prompt('Сколько будет стоить данная работа?'));
-  } while (isNumber(screenPrice));
+    screenPrice = prompt('Сколько будет стоить данная работа?');
+  } while (!isNumber(screenPrice));
 
   adaptive = confirm('Нужен ли адаптив на сайте?');
 }
@@ -39,9 +40,9 @@ const getAllServicePrices = function () {
       service2 = prompt('Какой дополнительный тип услуги нужен?');
     }
     do {
-      servicePrice = parseFloat(prompt('Сколько это будет стоить?', 0));
-    } while (isNumber(servicePrice));
-    sum += servicePrice;
+      servicePrice = prompt('Сколько это будет стоить?', 0);
+    } while (!isNumber(servicePrice));
+    sum += parseFloat(servicePrice);
   }
   return sum;
 }
@@ -52,7 +53,7 @@ const showTypeOf = function (variable) {
 
 //Функция возвращает сумму стоимости верстки и стоимости дополнительных услуг
 function getFullPrice(price1, price2) {
-  return price1 + price2;
+  return parseFloat(price1) + parseFloat(price2);
 }
 
 //Расчёт скидки.
