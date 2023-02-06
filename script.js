@@ -7,12 +7,22 @@ const appData = {
   screenPrice: 0,
   adaptive: true,
   rollback: 15,
-  rollbackMessage: '',
   allServicePrices: 0,
-  service1: '',
-  service2: '',
   fullPrice: 0,
+  rollbackMessage: '',
   servicePercentPrice: 0,
+  services: {},
+
+  start: function () {
+    this.asking();
+    this.getAllServicePrices();
+    this.getTitle();
+    this.getFullPrice();
+    this.getRollbackMessage();
+    this.getServicePercentPrices();
+
+    this.logger();
+  },
 
   isNumber: function (num) {
     return isNaN(num);
@@ -27,37 +37,38 @@ const appData = {
     } while (this.isNumber(this.screenPrice));
 
     this.adaptive = confirm('Нужен ли адаптив на сайте?');
+
+    for (let i = 0; i < 2; i++) {
+      let name = prompt('Какой дополнительный тип услуги нужен?');
+      do {
+        servicePrice = prompt('Сколько это будет стоить?', 0);
+      } while (this.isNumber(servicePrice));
+
+      this.services[name] = parseFloat(price);
+    }
+
   },
 
-  getTitle: function (string) {
-    let str = string.trim().toLowerCase();
-    return str.charAt(0).toUpperCase() + str.slice(1);
+  getTitle: function () {
+    let str = this.title.trim().toLowerCase();
+    this.title = str.charAt(0).toUpperCase() + str.slice(1);
   },
 
   getAllServicePrices: function () {
-    let servicePrice = 0;
+    // let servicePrice = 0;
 
-    for (let i = 0; i < 2; i++) {
-      if (i === 0) {
-        this.service1 = prompt('Какой дополнительный тип услуги нужен?');
-      } else if (i === 1) {
-        this.service2 = prompt('Какой дополнительный тип услуги нужен?');
-      }
-      do {
-        servicePrice = parseFloat(prompt('Сколько это будет стоить?', 0));
-      } while (this.isNumber(servicePrice));
-      this.allServicePrices += servicePrice;
-    }
+    // this.allServicePrices += servicePrice;
+
   },
 
   getFullPrice: function () {
     this.fullPrice = this.screenPrice + this.allServicePrices;
   },
 
-  getRollbackMessage: function (price) {
-    if (price > 30000) this.rollbackMessage = 'Даем скидку в 10%';
-    else if (price > 15000) this.rollbackMessage = 'Даем скидку в 5%';
-    else if (price >= 0) this.rollbackMessage = 'Скидка не предусмотрена';
+  getRollbackMessage: function () {
+    if (this.fullPrice > 30000) this.rollbackMessage = 'Даем скидку в 10%';
+    else if (this.fullPrice > 15000) this.rollbackMessage = 'Даем скидку в 5%';
+    else if (this.fullPrice >= 0) this.rollbackMessage = 'Скидка не предусмотрена';
     else this.rollbackMessage = 'Что-то пошло не так.';
   },
 
@@ -69,17 +80,7 @@ const appData = {
     for (let key in this) {
       console.log(this[key]);
     }
-  },
-
-  start: function () {
-    this.asking();
-    this.title = this.getTitle(this.title);
-    this.getAllServicePrices();
-    this.getFullPrice();
-    this.getRollbackMessage(this.fullPrice);
-    this.getServicePercentPrices();
-    this.logger();
-  },
+  }
 }
 
 appData.start();
