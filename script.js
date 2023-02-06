@@ -25,7 +25,8 @@ const appData = {
   },
 
   isNumber: function (num) {
-    return isNaN(num);
+    return !isNaN(parseFloat(num)) 
+      && parseFloat(num).toString().length === num.length;
   },
 
   asking: function () {
@@ -33,7 +34,7 @@ const appData = {
     this.screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Сложные, Интерактивные');
 
     do {
-      this.screenPrice = parseFloat(prompt('Сколько будет стоить данная работа?'));
+      this.screenPrice = prompt('Сколько будет стоить данная работа?');
     } while (this.isNumber(this.screenPrice));
 
     this.adaptive = confirm('Нужен ли адаптив на сайте?');
@@ -44,7 +45,7 @@ const appData = {
         servicePrice = prompt('Сколько это будет стоить?', 0);
       } while (this.isNumber(servicePrice));
 
-      this.services[name] = parseFloat(price);
+      this.services[`name${i}`] = parseFloat(price);
     }
 
   },
