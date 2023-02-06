@@ -11,7 +11,7 @@ const appData = {
   fullPrice: 0,
   rollbackMessage: '',
   servicePercentPrice: 0,
-  services: [],
+  services: {},
 
   start: function () {
     this.asking();
@@ -31,8 +31,7 @@ const appData = {
   },
 
   isString: function (str) {
-    return (typeof str === 'string')
-      && str.trim().match(/\D/) !== null;
+    return isNaN(str);
   },
 
   asking: function () {
@@ -66,7 +65,7 @@ const appData = {
         price = prompt('Сколько это будет стоить?');
       } while (!this.isNumber(price));
 
-      this.services.push({ id: i, name: nameSvcType, price: parseFloat(price) });
+      this.services[nameSvcType] = parseFloat(price);
     }
 
     this.adaptive = confirm('Нужен ли адаптив на сайте?');
@@ -84,8 +83,8 @@ const appData = {
   },
 
   getAllServicePrices: function () {
-    for (let service of this.services) {
-      this.allServicePrices += +service.price;
+    for (let service in this.services) {
+      this.allServicePrices += +this.services[service];
     }
   },
 
