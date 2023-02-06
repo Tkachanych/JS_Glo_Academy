@@ -30,29 +30,43 @@ const appData = {
       && (parseFloat(num).toString().length === num.length);
   },
 
+  isString: function (str) {
+    return (typeof str === 'string')
+      && str.trim().match(/\D/) !== null;
+  },
+
   asking: function () {
-    this.title = prompt('Как называется Ваш проект?', 'Калькулятор вёрстки');
+    let price = 0;
+    let nameScrType = '';
+    let nameSvcType = '';
+
+    do {
+      this.title = prompt('Как называется Ваш проект?', 'Калькулятор вёрстки');
+    } while (!this.isString(this.title));
 
     for (let i = 0; i < 2; i++) {
-      let name = prompt('Какие типы экранов нужно разработать?');
-      let price = 0;
+      do {
+        nameScrType = prompt('Какие типы экранов нужно разработать?');
+      } while (!this.isString(nameScrType));
 
       do {
         price = prompt('Сколько будет стоить данная работа?');
       } while (!this.isNumber(price));
 
-      this.screens.push({ id: i, name: name, price: parseFloat(price) });
+      this.screens.push({ id: i, name: nameScrType, price: parseFloat(price) });
     }
 
     for (let i = 0; i < 2; i++) {
-      let name = prompt('Какой дополнительный тип услуги нужен?');
+      do {
+        nameSvcType = prompt('Какой дополнительный тип услуги нужен?');
+      } while (!this.isString(nameSvcType));
       let price = 0;
 
       do {
         price = prompt('Сколько это будет стоить?');
       } while (!this.isNumber(price));
 
-      this.services.push({ id: i, name: name, price: parseFloat(price) });
+      this.services.push({ id: i, name: nameSvcType, price: parseFloat(price) });
     }
 
     this.adaptive = confirm('Нужен ли адаптив на сайте?');
@@ -91,16 +105,16 @@ const appData = {
   },
 
   logger: function () {
-  console.log('title = ' + this.title);
-  console.dir(this.screens);
-  console.log('screenPrice = ' + this.screenPrice);
-  console.log('adaptive = ' + this.adaptive);
-  console.log('rollback = ' + this.rollback);
-  console.log('allServicePrices = ' + this.allServicePrices);
-  console.log('fullPrice = ' + this.fullPrice);
-  console.log('rollbackMessage = ' + this.rollbackMessage);
-  console.log('servicePercentPrice = ' + this.servicePercentPrice);
-  console.dir(this.services);
+    console.log('title = ' + this.title);
+    console.dir(this.screens);
+    console.log('screenPrice = ' + this.screenPrice);
+    console.log('adaptive = ' + this.adaptive);
+    console.log('rollback = ' + this.rollback);
+    console.log('allServicePrices = ' + this.allServicePrices);
+    console.log('fullPrice = ' + this.fullPrice);
+    console.log('rollbackMessage = ' + this.rollbackMessage);
+    console.log('servicePercentPrice = ' + this.servicePercentPrice);
+    console.dir(this.services);
   }
 }
 
