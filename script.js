@@ -25,8 +25,8 @@ const appData = {
   },
 
   isNumber: function (num) {
-    return !isNaN(parseFloat(num)) 
-      && parseFloat(num).toString().length === num.length;
+    return !isNaN(parseFloat(num))
+      && (parseFloat(num).toString().length === num.length);
   },
 
   asking: function () {
@@ -35,19 +35,20 @@ const appData = {
 
     do {
       this.screenPrice = prompt('Сколько будет стоить данная работа?');
-    } while (this.isNumber(this.screenPrice));
+    } while (!this.isNumber(this.screenPrice));
 
     this.adaptive = confirm('Нужен ли адаптив на сайте?');
 
     for (let i = 0; i < 2; i++) {
       let name = prompt('Какой дополнительный тип услуги нужен?');
+      let servicePrice;
+
       do {
-        servicePrice = prompt('Сколько это будет стоить?', 0);
-      } while (this.isNumber(servicePrice));
+        servicePrice = prompt('Сколько это будет стоить?');
+      } while (!this.isNumber(servicePrice));
 
-      this.services[`name${i}`] = parseFloat(price);
+      this.services[`${name}${i}`] = parseFloat(servicePrice);
     }
-
   },
 
   getTitle: function () {
@@ -56,14 +57,13 @@ const appData = {
   },
 
   getAllServicePrices: function () {
-    // let servicePrice = 0;
-
-    // this.allServicePrices += servicePrice;
-
+    for (let key in this.services) {
+      this.allServicePrices += this.services[key];
+    }
   },
 
   getFullPrice: function () {
-    this.fullPrice = this.screenPrice + this.allServicePrices;
+    this.fullPrice = parseFloat(this.screenPrice) + this.allServicePrices;
   },
 
   getRollbackMessage: function () {
