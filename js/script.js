@@ -3,7 +3,7 @@
 const header = document.getElementsByTagName('h1')[0];
 const btnStart = document.getElementsByClassName('handler_btn').start;
 const btnReset = document.getElementsByClassName('handler_btn').reset;
-const btnAddScreen = document.querySelector('button');
+const btnAddScreen = document.querySelector('.screen-btn');
 const otherItemsPercent = document.querySelectorAll('.other-items.percent');
 const otherItemsNumber = document.querySelectorAll('.other-items.number');
 const inputTypeRange = document.querySelector('.rollback input');
