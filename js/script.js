@@ -9,13 +9,14 @@ const otherItemsNumber = document.querySelectorAll('.other-items.number');
 const inputTypeRange = document.querySelector('.rollback input');
 const span = document.querySelector('.rollback span');
 
-const getTotalInputs = function () {
-  for (let i of document.getElementsByClassName('total-input')) {
-    console.log(i);
-    }
-}
+const [total,
+  totalCount,
+  totalCountOther,
+  totalFullCount,
+  totalCountRollback
+] = document.getElementsByClassName('total-input');
 
-let screens = document.querySelectorAll('.screen select option');
+let screens = document.querySelectorAll('.screen');
 
 const appData = {
 
@@ -144,7 +145,9 @@ console.log(otherItemsPercent);
 console.log(otherItemsNumber);
 console.log(inputTypeRange);
 console.log(span);
-
-getTotalInputs();
-
+console.log(total);
+console.log(totalCount);
+console.log(totalCountOther);
+console.log(totalFullCount);
+console.log(totalCountRollback);
 console.log(screens);
