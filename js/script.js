@@ -1,5 +1,22 @@
 'use strict';
 
+const header = document.getElementsByTagName('h1')[0];
+const btnStart = document.getElementsByClassName('handler_btn').start;
+const btnReset = document.getElementsByClassName('handler_btn').reset;
+const btnAddScreen = document.querySelector('button');
+const otherItemsPercent = document.querySelectorAll('.other-items.percent');
+const otherItemsNumber = document.querySelectorAll('.other-items.number');
+const inputTypeRange = document.querySelector('.rollback input');
+const span = document.querySelector('.rollback span');
+
+const getTotalInputs = function () {
+  for (let i of document.getElementsByClassName('total-input')) {
+    console.log(i);
+    }
+}
+
+let screens = document.querySelectorAll('.screen select option');
+
 const appData = {
 
   title: '',
@@ -117,4 +134,17 @@ const appData = {
   }
 }
 
-appData.start();
+//appData.start();
+
+console.log(header);
+console.log(btnStart);
+console.log(btnReset);
+console.log(btnAddScreen);
+console.log(otherItemsPercent);
+console.log(otherItemsNumber);
+console.log(inputTypeRange);
+console.log(span);
+
+getTotalInputs();
+
+console.log(screens);
