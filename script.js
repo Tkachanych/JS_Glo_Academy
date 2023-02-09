@@ -1,13 +1,29 @@
 'use strict'
 
 const button = document.getElementById('btn');
-const input = document.getElementById('text');
+const inputText = document.getElementById('text');
 const square = document.getElementById('square');
+const circle = document.getElementById('circle');
+const circleButton = document.getElementById('e_btn');
+const inputRange = document.getElementById('range');
+const rangeSpan = document.getElementById('range-span');
 
 const setSqareColor = function() {
-  square.setAttribute(bac)
+  if (inputText.value.trim() != '') {
+    square.style.backgroundColor = inputText.value;
+  }
+  input.value = '';
 }
 
-console.dir(square);
+const setCircleSize = function (event) {
+  rangeSpan.textContent = event.target.value;
+  circle.style.width = event.target.value + '%';
+  circle.style.height = event.target.value + '%';
+}
 
-//button.addEventListener('click')
+circleButton.style.display = 'none';
+
+button.addEventListener('click', setSqareColor);
+
+inputRange.addEventListener('input', setCircleSize);
+inputRange.addEventListener('change', setCircleSize);
