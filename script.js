@@ -15,14 +15,13 @@ const setSqareColor = function() {
   inputText.value = '';
 }
 
-const setCircleSize = function (event) {
-  rangeSpan.textContent = event.target.value + '%';
-  circle.style.height = event.target.value + '%';
-  circle.style.width = event.target.value + '%';
+const setCircleSize = function () {
+  rangeSpan.textContent = inputRange.value + '%';
+  circle.style.height = inputRange.value + '%';
+  circle.style.width = inputRange.value + '%';
 }
 
-inputRange.value = '100';
-rangeSpan.textContent = '100%';
+setCircleSize(inputRange);
 
 circleButton.style.display = 'none';
 
