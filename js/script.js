@@ -41,20 +41,29 @@ const appData = {
   },
 
   readyToStart: () => {
+    let ready = true;
     screens = document.querySelectorAll('.screen');
     screens.forEach(function (screen) {
       const select = screen.querySelector('select');
       const input = screen.querySelector('input');
-      if (select.value === '' || input.value) {
-//        return false;
-        console.log(input.value);
+      if (
+        select.value === '' ||
+        isNaN(input.value) ||
+        +input.value < 1 ||
+        !Number.isInteger(+input.value) ||
+        input.value.trim().length !== input.value.length
+      ) {
+        input.value = '';
+        ready = false;
       }
     });
-    return false;
+    return ready;
   },
 
   start: function () {
     if (!appData.readyToStart()) return;
+
+    appData.cleanData();
 
     appData.addScreens();
     appData.addServices();
@@ -62,12 +71,25 @@ const appData = {
 
     appData.showResult();
     //   appData.logger();
-//    console.log(appData);
+    console.log(appData);
   },
 
   addRollback: function () {
     inputRangeValue.textContent = inputTypeRange.value + '%';
     appData.rollback = +inputTypeRange.value;
+  },
+
+  cleanData: function () {
+    appData.screens = [];
+    appData.servicesPercent = {};
+    appData.servicesNumber = {};
+    appData.screenPrice = 0;
+    appData.screenCount = 0;
+    appData.fullPrice = 0;
+    appData.servicePercentPrice = 0;
+    appData.servicePricesPercent = 0;
+    appData.servicePricesNumber = 0;
+    appData.rollback = 0;
   },
 
   showResult: function () {
