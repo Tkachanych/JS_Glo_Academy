@@ -17,38 +17,57 @@ const [total, totalCount, totalCountOther, totalFullCount, totalCountRollback] =
 let screens = document.querySelectorAll('.screen');
 
 const appData = {
-  title: '',
   screens: [],
   screenPrice: 0,
-  adaptive: true,
-  rollback: 15,
-  servicePricesPercent: 0,
+  screenCount: 0,
+  rollback: 0,
+  servicePricesPercent: 0, // наценка за услуги
   servicePricesNumber: 0,
   fullPrice: 0,
-  rollbackMessage: '',
-  servicePercentPrice: 0,
+  servicePercentPrice: 0, // откат!
   servicesPercent: {},
   servicesNumber: {},
 
   init: function () {
-    this.addTitle();
+    appData.addTitle();
 
-    btnStart.addEventListener('click', this.start);
-    btnAddScreen.addEventListener('click', this.addScreenBlock);
+    btnStart.addEventListener('click', appData.start);
+    btnAddScreen.addEventListener('click', appData.addScreenBlock);
+    inputTypeRange.addEventListener('input', appData.addRollback);
   },
 
   addTitle: function () {
     document.title = title.textContent;
   },
 
+  readyToStart: () => {
+    screens = document.querySelectorAll('.screen');
+    screens.forEach(function (screen) {
+      const select = screen.querySelector('select');
+      const input = screen.querySelector('input');
+      if (select.value === '' || input.value) {
+//        return false;
+        console.log(input.value);
+      }
+    });
+    return false;
+  },
+
   start: function () {
+    if (!appData.readyToStart()) return;
+
     appData.addScreens();
     appData.addServices();
     appData.addPrices();
 
-    
     appData.showResult();
-    // this.logger();
+    //   appData.logger();
+//    console.log(appData);
+  },
+
+  addRollback: function () {
+    inputRangeValue.textContent = inputTypeRange.value + '%';
+    appData.rollback = +inputTypeRange.value;
   },
 
   showResult: function () {
@@ -56,6 +75,8 @@ const appData = {
     totalCountOther.value =
       appData.servicePricesPercent + appData.servicePricesNumber;
     totalFullCount.value = appData.fullPrice;
+    totalCountRollback.value = appData.servicePercentPrice;
+    totalCount.value = appData.screenCount;
   },
 
   addScreens: function () {
@@ -71,6 +92,7 @@ const appData = {
         id: index,
         name: selectName,
         price: +select.value * +input.value,
+        count: +input.value,
       });
     });
   },
@@ -106,6 +128,7 @@ const appData = {
   addPrices: function () {
     for (let screen of appData.screens) {
       appData.screenPrice += +screen.price;
+      appData.screenCount += +screen.count;
     }
 
     for (let key in appData.servicesNumber) {
@@ -121,27 +144,20 @@ const appData = {
       appData.screenPrice +
       appData.servicePricesNumber +
       appData.servicePricesPercent;
-  },
 
-  getRollbackMessage: function () {
-    if (this.fullPrice > 30000) this.rollbackMessage = 'Даём скидку в 10%';
-    else if (this.fullPrice > 15000) this.rollbackMessage = 'Даём скидку в 5%';
-    else if (this.fullPrice >= 0)
-      this.rollbackMessage = 'Скидка не предусмотрена';
-    else this.rollbackMessage = 'Что-то пошло не так.';
+    appData.servicePercentPrice = Math.ceil(
+      appData.fullPrice - appData.fullPrice * (appData.rollback / 100)
+    );
   },
 
   logger: function () {
-    console.log('title = ' + this.title);
-    console.dir(this.screens);
-    console.log('screenPrice = ' + this.screenPrice);
-    console.log('adaptive = ' + this.adaptive);
-    console.log('rollback = ' + this.rollback);
-    console.log('allServicePrices = ' + this.allServicePrices);
-    console.log('fullPrice = ' + this.fullPrice);
-    console.log('rollbackMessage = ' + this.rollbackMessage);
-    console.log('servicePercentPrice = ' + this.servicePercentPrice);
-    console.dir(this.services);
+    console.dir(appData.screens);
+    console.log('screenPrice = ' + appData.screenPrice);
+    console.log('rollback = ' + appData.rollback);
+    console.log('fullPrice = ' + appData.fullPrice);
+    console.log('servicePercentPrice = ' + appData.servicePercentPrice);
+    console.log(appData.servicesPercent);
+    console.log(appData.servicesNumber);
   },
 };
 //debugger;
