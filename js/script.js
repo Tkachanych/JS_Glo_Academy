@@ -67,6 +67,7 @@ const appData = {
 
     appData.addScreens();
     appData.addServices();
+    appData.addRollback();
     appData.addPrices();
 
     appData.showResult();
