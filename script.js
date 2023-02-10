@@ -8,9 +8,6 @@ const circleButton = document.getElementById('e_btn');
 const inputRange = document.getElementById('range');
 const rangeSpan = document.getElementById('range-span');
 
-const circleStartWidth = circle.offsetWidth;
-const circleStartHeight = circle.offsetHeight;
-
 const setSqareColor = function() {
   if (inputText.value.trim() != '') {
     square.style.backgroundColor = inputText.value;
@@ -20,8 +17,8 @@ const setSqareColor = function() {
 
 const setCircleSize = function (event) {
   rangeSpan.textContent = event.target.value + '%';
-  circle.style.height = (circleStartHeight * event.target.value/100) + 'px';
-  circle.style.width = (circleStartWidth * event.target.value/100) + 'px';
+  circle.style.height = event.target.value + '%';
+  circle.style.width = event.target.value + '%';
 }
 
 inputRange.value = '100';
