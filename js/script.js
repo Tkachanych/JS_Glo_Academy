@@ -42,7 +42,6 @@ const appData = {
 
   readyToStart: () => {
     let ready = true;
-    screens = document.querySelectorAll('.screen');
     screens.forEach(function (screen) {
       const select = screen.querySelector('select');
       const input = screen.querySelector('input');
@@ -106,8 +105,6 @@ const appData = {
   },
 
   addScreens: function () {
-    screens = document.querySelectorAll('.screen');
-
     screens.forEach(function (screen, index) {
       const select = screen.querySelector('select');
       const input = screen.querySelector('input');
@@ -146,11 +143,11 @@ const appData = {
   },
 
   addScreenBlock: function () {
-    screens = document.querySelectorAll('.screen');
     const cloneScreen = screens[0].cloneNode(true);
     cloneScreen.querySelector('input').value = '';
 
     screens[screens.length - 1].after(cloneScreen);
+    screens = document.querySelectorAll('.screen');
   },
 
   addPrices: function () {
