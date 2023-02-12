@@ -61,7 +61,10 @@ const appData = {
   },
 
   start: function () {
-    if (!appData.readyToStart()) return;
+    if (!appData.readyToStart()) {
+      alert('Не выбран тип экрана, или не заполнено количество экранов.');
+      return;
+    };
 
     appData.cleanData();
 
@@ -143,7 +146,9 @@ const appData = {
   },
 
   addScreenBlock: function () {
+    screens = document.querySelectorAll('.screen');
     const cloneScreen = screens[0].cloneNode(true);
+    cloneScreen.querySelector('input').value = '';
 
     screens[screens.length - 1].after(cloneScreen);
   },
