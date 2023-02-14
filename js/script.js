@@ -5,10 +5,11 @@ const headerInput = document.querySelector('.header-input');
 const todoList = document.querySelector('.todo-list');
 const todoCompleted = document.querySelector('.todo-completed');
 
-const toDoData = [];
+const toDoData = JSON.parse(localStorage.getItem('toDoData')) || [];
 
 const saveData = function () {
-  localStorage['toDoData'] = JSON.stringify(toDoData);
+  localStorage.setItem('toDoData',JSON.stringify(toDoData));
+  render();
 }
 
 const render = function () {
@@ -33,13 +34,11 @@ const render = function () {
 
     li.querySelector('.todo-complete').addEventListener('click', function () {
       item.completed = !item.completed;
-      render();
       saveData();
     });
 
     li.querySelector('.todo-remove').addEventListener('click', function () {
       toDoData.splice(index, 1);
-      render();
       saveData();
     });
   })
@@ -57,11 +56,7 @@ todoControl.addEventListener('submit', function (event) {
   toDoData.push(newTodo);
   headerInput.value = '';
 
-  render();
   saveData();
 });
 
-if (localStorage['toDoData']) {
-  toDoData.push(...JSON.parse(localStorage['toDoData']));
   render();
-}
