@@ -11,6 +11,8 @@ const inputRangeValue = document.querySelector('.rollback .range-value');
 const btnStart = document.getElementsByClassName('handler_btn').start;
 const btnReset = document.getElementsByClassName('handler_btn').reset;
 
+const cmsOpen = document.getElementById('cms-open');
+
 const [total, totalCount, totalCountOther, totalFullCount, totalCountRollback] =
   document.getElementsByClassName('total-input');
 
@@ -32,6 +34,7 @@ const appData = {
     this.addTitle();
 
     btnStart.addEventListener('click', () => this.start());
+    btnReset.addEventListener('click', () => this.reset());
     btnAddScreen.addEventListener('click', () => this.addScreenBlock());
     inputTypeRange.addEventListener('input', () => this.addRollback());
   },
@@ -65,16 +68,55 @@ const appData = {
       return;
     };
 
-    this.cleanData();
-
     this.addScreens();
     this.addServices();
     this.addRollback();
     this.addPrices();
 
     this.showResult();
-    //   this.logger();
-    console.log(this);
+
+    btnStart.style.display = 'none';
+    btnReset.style.display = '';
+
+    //this.logger();
+    //console.log(this);
+  },
+
+  reset: function () {
+
+    screens.forEach((screen, index) => {
+      if (index !== 0) {
+        screen.remove();
+      } else {
+        screen.querySelector('select').disabled = false;
+        screen.querySelector('input').disabled = false;
+        screen.querySelector('select').value = '';
+        screen.querySelector('input').value = '';
+      }
+    });
+
+    otherItemsPercent.forEach(item => {
+      const check = item.querySelector('input[type=checkbox]');
+      check.checked = false;
+      check.disabled = false;
+    });
+
+    otherItemsNumber.forEach(item => {
+      const check = item.querySelector('input[type=checkbox]');
+      check.checked = false;
+      check.disabled = false;
+    });
+
+    this.cleanData();
+    this.showResult();
+
+    inputTypeRange.value = 0;
+    inputRangeValue.textContent = inputTypeRange.value + '%';
+
+    cmsOpen.checked = false;
+    btnAddScreen.disabled = false;
+    btnStart.style.display = '';
+    btnReset.style.display = 'none';
   },
 
   addRollback: function () {
@@ -117,7 +159,12 @@ const appData = {
         price: +select.value * +input.value,
         count: +input.value,
       });
+
+      select.disabled = true;
+      input.disabled = true;
     });
+
+    btnAddScreen.disabled = true;
   },
 
   addServices: function () {
@@ -129,6 +176,7 @@ const appData = {
       if (check.checked) {
         this.servicesPercent[label.textContent] = +input.value;
       }
+      check.disabled = true;
     });
 
     otherItemsNumber.forEach((item) => {
@@ -139,6 +187,7 @@ const appData = {
       if (check.checked) {
         this.servicesNumber[label.textContent] = +input.value;
       }
+      check.disabled = true;
     });
   },
 
