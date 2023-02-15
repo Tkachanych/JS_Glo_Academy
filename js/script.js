@@ -67,7 +67,7 @@ const appData = {
       alert('Не выбран тип экрана, или не заполнено количество экранов.');
       return;
     };
-
+    // debugger;
     this.addScreens();
     this.addServices();
     this.addRollback();
@@ -84,6 +84,7 @@ const appData = {
 
   reset: function () {
 
+    //    debugger;
     screens.forEach((screen, index) => {
       if (index !== 0) {
         screen.remove();
@@ -94,6 +95,7 @@ const appData = {
         screen.querySelector('input').value = '';
       }
     });
+    screens = document.querySelectorAll('.screen');
 
     otherItemsPercent.forEach(item => {
       const check = item.querySelector('input[type=checkbox]');
@@ -106,7 +108,6 @@ const appData = {
       check.checked = false;
       check.disabled = false;
     });
-
     this.cleanData();
     this.showResult();
 
@@ -234,5 +235,5 @@ const appData = {
     console.log(this.servicesNumber);
   },
 };
-//debugger;
+
 appData.init();
