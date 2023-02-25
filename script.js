@@ -21,7 +21,7 @@ const setCircleSize = function () {
   circle.style.width = inputRange.value + '%';
 }
 
-setCircleSize(inputRange);
+setCircleSize();
 
 circleButton.style.display = 'none';
 
